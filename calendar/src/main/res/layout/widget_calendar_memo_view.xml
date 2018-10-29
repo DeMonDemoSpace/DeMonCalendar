@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_last"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/cal_last" />
+
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/iv_today"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="40dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/cal_today" />
+
+        <ImageView
+            android:id="@+id/iv_next"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/cal_next" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/week_monday"
+        layout="@layout/week_monday" />
+
+    <include
+        android:id="@+id/week_sunday"
+        layout="@layout/week_sunday"
+        android:visibility="gone" />
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.demon.calendar.view.MonthPager
+            android:id="@+id/month_pager"
+            android:layout_width="match_parent"
+            android:layout_height="270dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="45dp"
+            android:background="#ffffff"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            app:layout_behavior="com.demon.calendar.behavior.RecyclerViewBehavior" />
+        <!-- paddingBottom或者magin距离必须是MonthPager高度的1/6-->
+        <!-- RecyclerView的高度必须是MatchParent-->
+        <!-- RecyclerView的background必须是非透明-->
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

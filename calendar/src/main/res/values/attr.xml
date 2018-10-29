@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MonthPager">
+        <attr name="mp_row" format="integer" />
+    </declare-styleable>
+
+
+    <declare-styleable name="CalendarView">
+        <attr name="cv_isLunar" format="boolean" />
+        <attr name="cv_isShowToday" format="boolean" />
+        <attr name="cv_theme">
+            <enum name="Default" value="0" />
+            <enum name="Custom" value="1" />
+        </attr>
+        <attr name="cv_day">
+            <enum name="Monday" value="0" />
+            <enum name="Sunday" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="CalendarMemoView">
+        <attr name="cmv_isLunar" format="boolean" />
+        <attr name="cmv_isShowToday" format="boolean" />
+        <attr name="cmv_theme">
+            <enum name="Default" value="0" />
+            <enum name="Custom" value="1" />
+        </attr>
+        <attr name="cmv_day">
+            <enum name="Monday" value="0" />
+            <enum name="Sunday" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

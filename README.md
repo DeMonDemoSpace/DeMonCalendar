@@ -40,13 +40,10 @@ dependencies {
         app:cv_isShowToday="true"
         app:cv_theme="Default" />
 ```
-
-|属性|类型|描述|
-|:|:|:|
-|cv_day|枚举|Monday：一周的第一天是星期一，Sunday：一周的第一天是星期天|
-|cv_isLunar|boolean|是否显示农历|
-|cv_isShowToday|boolean|是否显示今天按钮|
-|cv_theme|枚举|日历的主题|
+>cv_day|枚举|Monday：一周的第一天是星期一，Sunday：一周的第一天是星期天|
+>cv_isLunar|boolean|是否显示农历|
+>cv_isShowToday|boolean|是否显示今天按钮|
+>cv_theme|枚举|日历的主题|
 
 ```java
  calendarView = findViewById(R.id.cv);
@@ -82,12 +79,10 @@ dependencies {
         app:cmv_isLunar="true"
         app:cmv_theme="Custom" />
 ```
-|属性|类型|描述|
-|:|:|:|
-|cmv_day|枚举|Monday：一周的第一天是星期一，Sunday：一周的第一天是星期天|
-|cmv_isLunar|boolean|是否显示农历|
-|cmv_isShowToday|boolean|是否显示今天按钮|
-|cmv_theme|枚举|日历的主题|
+>cmv_day|枚举|Monday：一周的第一天是星期一，Sunday：一周的第一天是星期天|
+>cmv_isLunar|boolean|是否显示农历|
+>cmv_isShowToday|boolean|是否显示今天按钮|
+>cmv_theme|枚举|日历的主题|
 
 ```java
 calendarView = findViewById(R.id.cv);

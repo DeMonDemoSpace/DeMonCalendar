@@ -26,10 +26,10 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
         calendarView = findViewById(R.id.cv);
         HashMap<String, String> markData = new HashMap<>();
-        markData.put("2018-10-9", "班");
-        markData.put("2018-10-19", "休");
-        markData.put("2018-10-29", "假");
-        markData.put("2018-10-10", "班");
+        markData.put("2018-10-9", "0");
+        markData.put("2018-10-19", "1");
+        markData.put("2018-10-29", "0");
+        markData.put("2018-10-10", "1");
         calendarView.setMarkData(markData);
         calendarView.setOnDateListener(new OnDateListener() {
             @Override

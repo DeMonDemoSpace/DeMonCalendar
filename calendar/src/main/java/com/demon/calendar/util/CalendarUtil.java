@@ -296,7 +296,7 @@ public class CalendarUtil {
     public static int[] getYMD(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        return new int[]{cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DATE)};
+        return new int[]{cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DATE), cal.get(Calendar.HOUR_OF_DAY)};
     }
 
 }

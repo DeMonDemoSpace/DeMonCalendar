@@ -2,8 +2,10 @@ package com.demon.calendar.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -15,7 +17,7 @@ import com.demon.calendar.component.CalendarAttr;
 import com.demon.calendar.component.CalendarViewAdapter;
 import com.demon.calendar.listener.OnDateListener;
 import com.demon.calendar.listener.OnSelectDateListener;
-import com.demon.calendar.model.Calendar;
+import com.demon.calendar.model.CalendarItem;
 import com.demon.calendar.model.CalendarDate;
 import com.demon.calendar.util.CalendarUtil;
 
@@ -35,14 +37,13 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
     private MonthPager monthPager;
     private boolean isLunar, isShowToday;
     private int showDay, theme;
-    private CalendarDate currentDate;
     private CalendarViewAdapter calendarAdapter;
     private OnSelectDateListener onSelectDateListener;
-    private ArrayList<Calendar> currentCalendars = new ArrayList<>();
-    private int mCurrentPage = MonthPager.CURRENT_DAY_INDEX;
+    private ArrayList<CalendarItem> currentCalendars = new ArrayList<>();
     private OnDateListener onDateListener;
-
+    private CalendarDate currentCalendarDate;
     private CalendarAttr.WeekArrayType weekArrayType = CalendarAttr.WeekArrayType.Monday;
+    private CalendarItem currentCalendar;
 
     public CalendarView(Context context) {
         this(context, null);
@@ -90,7 +91,7 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
      * @return void
      */
     private void initCurrentDate(CalendarDate date) {
-        currentDate = date;
+        currentCalendarDate = date;
         tvDate.setText(date.toString());
     }
 
@@ -117,7 +118,7 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
             public void onSelectDate(CalendarDate date) {
                 initCurrentDate(date);
                 if (onDateListener != null) {
-                    onDateListener.onSelectDate(date);
+                    onDateListener.onDateChange(date);
                 }
             }
 
@@ -144,27 +145,27 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
                 page.setAlpha(position);
             }
         });
+        currentCalendars = calendarAdapter.getPagers();
         monthPager.addOnPageChangeListener(new MonthPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mCurrentPage = position;
-                currentCalendars = calendarAdapter.getPagers();
-                if (currentCalendars.get(position % currentCalendars.size()) != null) {
-                    CalendarDate date = currentCalendars.get(position % currentCalendars.size()).getSeedDate();
-                    if (calendarAdapter.getCalendarType() == CalendarAttr.CalendarType.WEEK) {
-                        date = CalendarUtil.getFirstOfWeek(date, weekArrayType);
-                    }
-                    initCurrentDate(date);
-                    onDateListener.onPageDateChange(date);
+                currentCalendar = currentCalendars.get(position % currentCalendars.size());
+                if (position == MonthPager.CURRENT_DAY_INDEX) {
+                    currentCalendar.selectDate(currentCalendarDate);
+                }else {
+                    tvDate.setText(currentCalendar.getSeedDate().toString());
                 }
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int position, int state) {
+                if (state == 0 && currentCalendar != null) {
+                    currentCalendar.selectDefaultDate();
+                }
             }
         });
     }
@@ -181,7 +182,7 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
             calendarAdapter.notifyDataChanged(today);
             initCurrentDate(today);
             if (onDateListener != null) {
-                onDateListener.onSelectDate(today);
+                onDateListener.onDateChange(today);
             }
         }
     }
@@ -199,4 +200,7 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
         this.onDateListener = onDateListener;
     }
 
+    public CalendarDate getCurrentCalendarDate() {
+        return currentCalendarDate;
+    }
 }

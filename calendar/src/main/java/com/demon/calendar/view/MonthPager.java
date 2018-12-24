@@ -61,7 +61,7 @@ public class MonthPager extends ViewPager {
             public void onPageScrollStateChanged(int state) {
                 pageScrollState = state;
                 if (monthPageChangeListener != null) {
-                    monthPageChangeListener.onPageScrollStateChanged(state);
+                    monthPageChangeListener.onPageScrollStateChanged(currentPosition, state);
                 }
                 pageChangeByGesture = true;
             }
@@ -117,7 +117,7 @@ public class MonthPager extends ViewPager {
 
         void onPageSelected(int position);
 
-        void onPageScrollStateChanged(int state);
+        void onPageScrollStateChanged(int pos, int state);
     }
 
     public int getTopMovableDistance() {

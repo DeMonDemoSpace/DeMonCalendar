@@ -7,7 +7,7 @@ import com.demon.calendar.Const;
 import com.demon.calendar.listener.IDayRenderer;
 import com.demon.calendar.listener.OnSelectDateListener;
 import com.demon.calendar.model.CalendarDate;
-import com.demon.calendar.model.Calendar;
+import com.demon.calendar.model.CalendarItem;
 import com.demon.calendar.model.Day;
 import com.demon.calendar.model.Week;
 import com.demon.calendar.util.CalendarUtil;
@@ -18,16 +18,16 @@ import com.demon.calendar.util.CalendarUtil;
 
 public class CalendarRenderer {
     private Week weeks[] = new Week[Const.TOTAL_ROW];    // 行数组，每个元素代表一行
-    private Calendar calendar;
+    private CalendarItem calendar;
     private CalendarAttr attr;
     private IDayRenderer dayRenderer;
     private Context context;
-    private OnSelectDateListener onSelectDateListener;    // 单元格点击回调事件
+    private OnSelectDateListener onSelectDateListener;// 单元格点击回调事件
     private CalendarDate seedDate; //种子日期
     private CalendarDate selectedDate; //被选中的日期
     private int selectedRowIndex = 0;
 
-    public CalendarRenderer(Calendar calendar, CalendarAttr attr, Context context) {
+    public CalendarRenderer(CalendarItem calendar, CalendarAttr attr, Context context) {
         this.calendar = calendar;
         this.attr = attr;
         this.context = context;
@@ -90,7 +90,7 @@ public class CalendarRenderer {
     /**
      * 刷新指定行的周数据
      *
-     * @param rowIndex  参数月所在年
+     * @param rowIndex 参数月所在年
      * @return void
      */
     public void updateWeek(int rowIndex) {
@@ -247,6 +247,10 @@ public class CalendarRenderer {
         calendar.invalidate();
     }
 
+    public void setSeedDate(CalendarDate seedDate) {
+        this.seedDate = seedDate;
+    }
+
     public CalendarDate getSeedDate() {
         return this.seedDate;
     }
@@ -265,6 +269,13 @@ public class CalendarRenderer {
         }
     }
 
+    public CalendarDate getDate(int row, int col) {
+        if (row >= 0 && row < weeks.length && col >= 0 && col < Const.TOTAL_COL) {
+            return weeks[row].days[col].getDate();
+        }
+        return null;
+    }
+
     public void resetSelectedRowIndex() {
         selectedRowIndex = 0;
     }
@@ -277,13 +288,10 @@ public class CalendarRenderer {
         this.selectedRowIndex = selectedRowIndex;
     }
 
-    public Calendar getCalendar() {
+    public CalendarItem getCalendar() {
         return calendar;
     }
 
-    public void setCalendar(Calendar calendar) {
-        this.calendar = calendar;
-    }
 
     public CalendarAttr getAttr() {
         return attr;

@@ -31,16 +31,12 @@ public class SecondActivity extends AppCompatActivity {
         markData.put("2018-10-19", "1");
         markData.put("2018-10-29", "0");
         markData.put("2018-10-10", "1");
-        calendarView.setMarkData(markData);
+        calendarView.setMarkData(markData);//绑定需要标记的日期
         calendarView.setOnDateListener(new OnDateListener() {
             @Override
-            public void onSelectDate(CalendarDate date) {
-                Log.i(TAG, "onSelectDate: " + date.toString());
-            }
-
-            @Override
-            public void onPageDateChange(CalendarDate date) {
-                Log.i(TAG, "onPageDateChange: " + date.toString());
+            public void onDateChange(CalendarDate date) {
+                //日期改变时回调
+                Log.i(TAG, "onDateChange: " + date.toString());
             }
         });
     }

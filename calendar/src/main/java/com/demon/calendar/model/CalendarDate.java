@@ -5,6 +5,7 @@ import com.demon.calendar.util.CalendarUtil;
 import java.io.Serializable;
 import java.util.Calendar;
 
+
 public class CalendarDate implements Serializable {
     private static final long serialVersionUID = 1L;
     public int year;

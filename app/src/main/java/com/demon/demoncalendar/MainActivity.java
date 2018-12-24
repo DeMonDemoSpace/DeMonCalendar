@@ -19,17 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private List<String> list = new ArrayList<>();
     private CalendarMemoView calendarView;
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 0x001) {
-                list.clear();
-                list.addAll(Arrays.asList(getResources().getStringArray(R.array.items)));
-                calendarView.adapter.notifyDataSetChanged();
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +30,21 @@ public class MainActivity extends AppCompatActivity {
         markData.put("2018-10-19", "休");
         markData.put("2018-10-29", "假");
         markData.put("2018-10-10", "班");
-        calendarView.setMarkData(markData);
+        calendarView.setMarkData(markData);//绑定需要标记的日期
         list.addAll(Arrays.asList(getResources().getStringArray(R.array.titles)));
-        calendarView.setAdapter(new ExampleAdapter(this, list));
+        calendarView.setAdapter(new ExampleAdapter(this, list));//给列表绑定适配器
         calendarView.setOnDateListener(new OnDateListener() {
             @Override
-            public void onSelectDate(CalendarDate date) {
-                Log.i(TAG, "onSelectDate: " + date.toString());
-                handler.sendEmptyMessage(0x001);
-            }
-
-            @Override
-            public void onPageDateChange(CalendarDate date) {
-                Log.i(TAG, "onPageDateChange: " + date.toString());
+            public void onDateChange(CalendarDate date) {
+                //日期改变时回调
+                Log.i(TAG, "onDateChange: " + date.toString());
                 list.clear();
-                list.addAll(Arrays.asList(getResources().getStringArray(R.array.titles)));
+                list.addAll(Arrays.asList(getResources().getStringArray(R.array.items)));
                 calendarView.adapter.notifyDataSetChanged();
             }
+
+
         });
+
     }
 }

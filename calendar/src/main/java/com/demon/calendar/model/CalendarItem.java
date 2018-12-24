@@ -14,8 +14,10 @@ import com.demon.calendar.listener.OnAdapterSelectListener;
 import com.demon.calendar.listener.OnSelectDateListener;
 import com.demon.calendar.util.CalendarUtil;
 
+import java.util.Calendar;
+
 @SuppressLint("ViewConstructor")
-public class Calendar extends View {
+public class CalendarItem extends View {
     /**
      * 日历列数
      */
@@ -31,7 +33,7 @@ public class Calendar extends View {
     private OnAdapterSelectListener onAdapterSelectListener;
     private float touchSlop;
 
-    public Calendar(Context context,
+    public CalendarItem(Context context,
                     OnSelectDateListener onSelectDateListener,
                     CalendarAttr attr) {
         super(context);
@@ -149,4 +151,70 @@ public class Calendar extends View {
     public void setDayRenderer(IDayRenderer dayRenderer) {
         renderer.setDayRenderer(dayRenderer);
     }
+
+
+    public void selectDate(CalendarDate date) {
+        for (int row = 0; row < Const.TOTAL_ROW; row++) {
+            for(int col = 0; col < Const.TOTAL_COL; col++ ){
+                CalendarDate calendarDate = renderer.getDate(row,col);
+                if(calendarDate != null
+                        && date.getYear() == calendarDate.getYear()
+                        && date.getMonth() == calendarDate.getMonth()
+                        && date.getDay() == calendarDate.getDay()
+                        ){
+                    onAdapterSelectListener.cancelSelectState();
+                    renderer.onClickDate(col, row);
+                    onAdapterSelectListener.updateSelectState();
+                }
+            }
+        }
+    }
+
+    /**
+     * 选中页面中的默认天：<br/>
+     * 1. 如果是月视图 = 是本月？今天：本月1号
+     * 2. 如果是周视图 = 本周1号
+     */
+    public void selectDefaultDate() {
+        if (CalendarAttr.CalendarType.MONTH == getCalendarType()) {
+            CalendarDate date = new CalendarDate(renderer.getSeedDate().year, renderer.getSeedDate().month, 1);
+            Calendar todayCalendar = Calendar.getInstance();
+            if (isSameMonth(todayCalendar, getSeedDate())) {
+                date = calendarDateForToday(todayCalendar);
+            }
+            for (int row = 0; row < Const.TOTAL_ROW; row++) {
+                for (int col = 0; col < Const.TOTAL_COL; col++) {
+                    CalendarDate calendarDate = renderer.getDate(row, col);
+                    if (calendarDate != null
+                            && date.getYear() == calendarDate.getYear()
+                            && date.getMonth() == calendarDate.getMonth()
+                            && date.getDay() == calendarDate.getDay()
+                            ) {
+                        //onAdapterSelectListener.cancelSelectState();
+                        renderer.onClickDate(col, row);
+                        onAdapterSelectListener.updateSelectState();
+                    }
+                }
+            }
+        } else if (CalendarAttr.CalendarType.WEEK == getCalendarType()) {
+            //onAdapterSelectListener.cancelSelectState();
+            renderer.onClickDate(0, renderer.getSelectedRowIndex());
+            onAdapterSelectListener.updateSelectState();
+        }
+    }
+
+    private CalendarDate calendarDateForToday(Calendar calendar) {
+        return new CalendarDate(calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    private boolean isSameMonth(Calendar calendar, CalendarDate currentDate) {
+        return calendar.get(Calendar.MONTH) + 1 == currentDate.getMonth()
+                && calendar.get(Calendar.YEAR) == currentDate.getYear();
+    }
+
+    public CalendarRenderer getRenderer() {
+        return renderer;
+    }
+
 }

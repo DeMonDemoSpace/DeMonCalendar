@@ -2,6 +2,7 @@ package com.demon.calendar.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +20,7 @@ import com.demon.calendar.component.CalendarAttr;
 import com.demon.calendar.component.CalendarViewAdapter;
 import com.demon.calendar.listener.OnDateListener;
 import com.demon.calendar.listener.OnSelectDateListener;
-import com.demon.calendar.model.Calendar;
+import com.demon.calendar.model.CalendarItem;
 import com.demon.calendar.model.CalendarDate;
 import com.demon.calendar.util.CalendarUtil;
 
@@ -32,6 +33,7 @@ import java.util.HashMap;
  * @description
  */
 public class CalendarMemoView extends FrameLayout implements View.OnClickListener {
+    private static final String TAG = "CalendarMemoView";
     private CoordinatorLayout content;
     private RecyclerView rvToDoList;
     private ImageView ivLast, ivToday, ivNext;
@@ -40,14 +42,14 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
     private MonthPager monthPager;
     private boolean isLunar, isShowToday;
     private int showDay, theme;
-    private CalendarDate currentDate;
     private CalendarViewAdapter calendarAdapter;
     private OnSelectDateListener onSelectDateListener;
-    private ArrayList<Calendar> currentCalendars = new ArrayList<>();
-    private int mCurrentPage = MonthPager.CURRENT_DAY_INDEX;
+    private ArrayList<CalendarItem> currentCalendars = new ArrayList<>();
     private CalendarAttr.WeekArrayType weekArrayType = CalendarAttr.WeekArrayType.Monday;
     private OnDateListener onDateListener;
     public RecyclerView.Adapter adapter;
+    private CalendarDate currentCalendarDate;
+    private CalendarItem currentCalendar;
 
     public CalendarMemoView(Context context) {
         this(context, null);
@@ -99,7 +101,7 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
      * @return void
      */
     private void initCurrentDate(CalendarDate date) {
-        currentDate = date;
+        currentCalendarDate = date;
         tvDate.setText(date.toString());
     }
 
@@ -132,7 +134,7 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
             public void onSelectDate(CalendarDate date) {
                 initCurrentDate(date);
                 if (onDateListener != null) {
-                    onDateListener.onSelectDate(date);
+                    onDateListener.onDateChange(date);
                 }
             }
 
@@ -152,6 +154,7 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
     private void initMonthPager() {
         monthPager.setAdapter(calendarAdapter);
         monthPager.setCurrentItem(MonthPager.CURRENT_DAY_INDEX);
+        currentCalendars = calendarAdapter.getPagers();
         monthPager.setPageTransformer(false, new ViewPager.PageTransformer() {
             @Override
             public void transformPage(View page, float position) {
@@ -162,24 +165,23 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
         monthPager.addOnPageChangeListener(new MonthPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mCurrentPage = position;
-                currentCalendars = calendarAdapter.getPagers();
-                if (currentCalendars.get(position % currentCalendars.size()) != null) {
-                    CalendarDate date = currentCalendars.get(position % currentCalendars.size()).getSeedDate();
-                    if (calendarAdapter.getCalendarType() == CalendarAttr.CalendarType.WEEK) {
-                        date = CalendarUtil.getFirstOfWeek(date, weekArrayType);
-                    }
-                    initCurrentDate(date);
-                    onDateListener.onPageDateChange(date);
+                currentCalendar = currentCalendars.get(position % currentCalendars.size());
+                if (position == MonthPager.CURRENT_DAY_INDEX) {
+                    currentCalendar.selectDate(currentCalendarDate);
+                }else {
+                    tvDate.setText(currentCalendar.getSeedDate().toString());
                 }
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int position, int state) {
+                if (state == 0 && currentCalendar != null) {
+                    currentCalendar.selectDefaultDate();
+                }
             }
         });
     }
@@ -192,15 +194,18 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
         } else if (id == R.id.iv_next) {
             monthPager.setCurrentItem(monthPager.getCurrentPosition() + 1);
         } else if (id == R.id.iv_today) {
-            CalendarDate today = new CalendarDate();
-            calendarAdapter.notifyDataChanged(today);
-            initCurrentDate(today);
-            if (onDateListener != null) {
-                onDateListener.onSelectDate(today);
-            }
+            initToday();
         }
     }
 
+    private void initToday() {
+        CalendarDate today = new CalendarDate();
+        initCurrentDate(today);
+        if (onDateListener != null) {
+            onDateListener.onDateChange(today);
+        }
+        calendarAdapter.notifyDataChanged(today);
+    }
 
     /**
      * 初始化标记数据，HashMap的形式，可自定义
@@ -212,6 +217,10 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
 
     public void setOnDateListener(OnDateListener onDateListener) {
         this.onDateListener = onDateListener;
+    }
+
+    public CalendarDate getCurrentCalendarDate() {
+        return currentCalendarDate;
     }
 
     public void setAdapter(RecyclerView.Adapter adapter) {

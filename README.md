@@ -42,25 +42,20 @@ dependencies {
 
 #### 代码中使用
 ```java
- calendarView = findViewById(R.id.cv);
+calendarView = findViewById(R.id.cv);
         HashMap<String, String> markData = new HashMap<>();
         markData.put("2018-10-9", "0");
         markData.put("2018-10-19", "1");
         markData.put("2018-10-29", "0");
         markData.put("2018-10-10", "1");
-        calendarView.setMarkData(markData);//设置标记日期
+        calendarView.setMarkData(markData);//绑定需要标记的日期
         calendarView.setOnDateListener(new OnDateListener() {
             @Override
-            public void onSelectDate(CalendarDate date) {
-             //选择日期时触发
-            }
-
-            @Override
-            public void onPageDateChange(CalendarDate date) {
-              //滑动日历时触发
+            public void onDateChange(CalendarDate date) {
+                //日期改变时回调
+                Log.i(TAG, "onDateChange: " + date.toString());
             }
         });
-    }
 ```
 #### 效果
 <img src="https://raw.githubusercontent.com/DeMonLiu623/DeMonCalendar/master/img/device-2018-10-29-163959.png" 
@@ -88,25 +83,22 @@ alt="" height="500" width="300">
 
 #### 代码中使用
 ```java
-calendarView = findViewById(R.id.cv);
+ calendarView = findViewById(R.id.cv);
         HashMap<String, String> markData = new HashMap<>();
         markData.put("2018-10-9", "班");
         markData.put("2018-10-19", "休");
         markData.put("2018-10-29", "假");
         markData.put("2018-10-10", "班");
-        calendarView.setMarkData(markData);
+        calendarView.setMarkData(markData);//绑定需要标记的日期
         list.addAll(Arrays.asList(getResources().getStringArray(R.array.titles)));
-        calendarView.setAdapter(new ExampleAdapter(this, list));//设置RecycleView的Adapter
+        calendarView.setAdapter(new ExampleAdapter(this, list));//给列表绑定适配器
         calendarView.setOnDateListener(new OnDateListener() {
             @Override
-            public void onSelectDate(CalendarDate date) {
-            
-            }
-
-            @Override
-            public void onPageDateChange(CalendarDate date) {
+            public void onDateChange(CalendarDate date) {
+                //日期改变时回调
+                Log.i(TAG, "onDateChange: " + date.toString());
                 list.clear();
-                list.addAll(Arrays.asList(getResources().getStringArray(R.array.titles)));
+                list.addAll(Arrays.asList(getResources().getStringArray(R.array.items)));
                 calendarView.adapter.notifyDataSetChanged();
             }
         });
@@ -125,7 +117,8 @@ alt="" height="500" width="300">
 ### 版本
 1. v1.0初始版本。
 2. v1.1修复一些bug。
-3. v1.2给点击今天添加监听。
+3. v1.2修复周月滑动的默认日期的问题，现在日期改变只有onDateChange(CalendarDate date)回调方法。
+
 ### BUG or 问题
 请E-mail：757454343@qq.com 联系我。
 

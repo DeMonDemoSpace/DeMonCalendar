@@ -8,6 +8,5 @@ import com.demon.calendar.model.CalendarDate;
  * @description
  */
 public interface OnDateListener {
-    void onSelectDate(CalendarDate date);
-    void onPageDateChange(CalendarDate date);
+    void onDateChange(CalendarDate date);
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="titles">
+        <item>点击列表进入SecondActivity</item>
         <item>Android</item>
         <item>IOS</item>
         <item>JAVA</item>
@@ -18,6 +19,7 @@
     </string-array>
 
     <string-array name="items">
+        <item>点击列表进入SecondActivity</item>
         <item>Normal List</item>
         <item>Normal Grid</item>
         <item>Normal Staggered</item>

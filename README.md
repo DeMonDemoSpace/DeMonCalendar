@@ -1,18 +1,9 @@
 [![](https://jitpack.io/v/DeMonLiu623/DeMonCalendar.svg)](https://jitpack.io/#DeMonLiu623/DeMonCalendar)
 
 # DeMonCalendar
-**一个基于[SuperCalendar](https://github.com/MagicMashRoom/SuperCalendar)和[CalendarExaple](https://github.com/codbking/CalendarExaple)改造的自用日历控件。**
+**一个基于[SuperCalendar](https://github.com/MagicMashRoom/SuperCalendar)和[CalendarExaple](https://github.com/codbking/CalendarExaple)改造的日历控件，可显示农历日期，仿小米滑动列表周月切换。**
 
-### 效果
-
-<img src="https://raw.githubusercontent.com/DeMonLiu623/DeMonCalendar/master/img/device-2018-10-29-163924.png" 
-alt="" height="500" width="300"><img src="https://raw.githubusercontent.com/DeMonLiu623/DeMonCalendar/master/img/device-2018-10-29-163947.png" 
-alt="" height="500" width="300"><img src="https://raw.githubusercontent.com/DeMonLiu623/DeMonCalendar/master/img/device-2018-10-29-163959.png" 
-alt="" height="500" width="300">
-
-### 使用
-
-#### 引入
+### 引入
 ```
 allprojects {
 		repositories {
@@ -24,11 +15,11 @@ allprojects {
 
 ```
 dependencies {
-	        implementation 'com.github.DeMonLiu623:DeMonCalendar:v1.0'
+	        implementation 'com.github.DeMonLiu623:DeMonCalendar:v1.2'
 	}
 ```
 
-#### 只使用日历
+### 只使用日历
 
 ```xml
 <com.demon.calendar.view.CalendarView
@@ -36,15 +27,20 @@ dependencies {
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cv_day="Monday"
-        app:cv_isLunar="false"
+        app:cv_isLunar="true"
         app:cv_isShowToday="true"
         app:cv_theme="Default" />
 ```
->cv_day|枚举|Monday：一周的第一天是星期一，Sunday：一周的第一天是星期天|  
->cv_isLunar|boolean|是否显示农历|  
->cv_isShowToday|boolean|是否显示今天按钮|  
->cv_theme|枚举|日历的主题|  
+#### 自定义属性说明
 
+|属性|类型|说明|
+|---|---|---|
+|cmv_day|枚举|Monday：一周的第一天是星期一，Sunday：一周的第一天是星期天|  
+|cmv_isLunar|boolean|是否显示农历|  
+|cmv_isShowToday|boolean|是否显示今天按钮|  
+|cmv_theme|枚举|日历的主题|  
+
+#### 代码中使用
 ```java
  calendarView = findViewById(R.id.cv);
         HashMap<String, String> markData = new HashMap<>();
@@ -56,19 +52,21 @@ dependencies {
         calendarView.setOnDateListener(new OnDateListener() {
             @Override
             public void onSelectDate(CalendarDate date) {
-             //选择日期触发
+             //选择日期时触发
             }
 
             @Override
             public void onPageDateChange(CalendarDate date) {
-              //滑动日历触发
+              //滑动日历时触发
             }
         });
     }
 ```
+#### 效果
+<img src="https://raw.githubusercontent.com/DeMonLiu623/DeMonCalendar/master/img/device-2018-10-29-163959.png" 
+alt="" height="500" width="300">
 
-
-#### 使用带list的日历
+### 使用带list的日历
 
 ```xml
 <com.demon.calendar.view.CalendarMemoView
@@ -79,11 +77,16 @@ dependencies {
         app:cmv_isLunar="true"
         app:cmv_theme="Custom" />
 ```
->cmv_day|枚举|Monday：一周的第一天是星期一，Sunday：一周的第一天是星期天|  
->cmv_isLunar|boolean|是否显示农历|  
->cmv_isShowToday|boolean|是否显示今天按钮|  
->cmv_theme|枚举|日历的主题|  
+#### 自定义属性说明
 
+|属性|类型|说明|
+|---|---|---|
+|cmv_day|枚举|Monday：一周的第一天是星期一，Sunday：一周的第一天是星期天|  
+|cmv_isLunar|boolean|是否显示农历|  
+|cmv_isShowToday|boolean|是否显示今天按钮|  
+|cmv_theme|枚举|日历的主题|   
+
+#### 代码中使用
 ```java
 calendarView = findViewById(R.id.cv);
         HashMap<String, String> markData = new HashMap<>();
@@ -108,9 +111,21 @@ calendarView = findViewById(R.id.cv);
             }
         });
 ```
-#### 其他
-请看源码，或者示例程序。
 
+#### 效果
+<img src="https://raw.githubusercontent.com/DeMonLiu623/DeMonCalendar/master/img/device-2018-10-29-163924.png" 
+alt="" height="500" width="300"><img src="https://raw.githubusercontent.com/DeMonLiu623/DeMonCalendar/master/img/device-2018-10-29-163947.png" 
+alt="" height="500" width="300">
+
+### 其他
+1. 修改控件的日历主题，图标等，可下载源码修改。
+2. 编写日历主题请参考源码的```CustomDayView.java```和```DefaultDayView.java```。
+3. 更多使用方法，请看源码，或者示例程序。
+
+### 版本
+1. v1.0初始版本。
+2. v1.1修复一些bug。
+3. v1.2给点击今天添加监听。
 ### BUG or 问题
 请E-mail：757454343@qq.com 联系我。
 

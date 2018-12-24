@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -21,7 +22,6 @@ import com.demon.calendar.listener.OnSelectDateListener;
 import com.demon.calendar.model.Calendar;
 import com.demon.calendar.model.CalendarDate;
 import com.demon.calendar.util.CalendarUtil;
-import com.demon.calendar.util.ScrollUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -195,6 +195,9 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
             CalendarDate today = new CalendarDate();
             calendarAdapter.notifyDataChanged(today);
             initCurrentDate(today);
+            if (onDateListener != null) {
+                onDateListener.onSelectDate(today);
+            }
         }
     }
 

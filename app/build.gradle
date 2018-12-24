@@ -21,6 +21,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
-    //implementation project(':calendar')
-    implementation 'com.github.DeMonLiu623:DeMonCalendar:v1.0'
+    implementation project(':calendar')
+    //implementation 'com.github.DeMonLiu623:DeMonCalendar:v1.0'
 }

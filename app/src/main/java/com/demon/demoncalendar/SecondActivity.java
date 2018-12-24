@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.demon.calendar.listener.OnDateListener;
 import com.demon.calendar.model.CalendarDate;
@@ -34,12 +35,12 @@ public class SecondActivity extends AppCompatActivity {
         calendarView.setOnDateListener(new OnDateListener() {
             @Override
             public void onSelectDate(CalendarDate date) {
-
+                Log.i(TAG, "onSelectDate: " + date.toString());
             }
 
             @Override
             public void onPageDateChange(CalendarDate date) {
-
+                Log.i(TAG, "onPageDateChange: " + date.toString());
             }
         });
     }

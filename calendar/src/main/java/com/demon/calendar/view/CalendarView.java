@@ -180,6 +180,9 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
             CalendarDate today = new CalendarDate();
             calendarAdapter.notifyDataChanged(today);
             initCurrentDate(today);
+            if (onDateListener != null) {
+                onDateListener.onSelectDate(today);
+            }
         }
     }
 

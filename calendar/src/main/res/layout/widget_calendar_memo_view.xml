@@ -12,11 +12,11 @@
 
         <ImageView
             android:id="@+id/iv_last"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_centerVertical="true"
             android:layout_margin="5dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             android:src="@drawable/cal_last" />
 
 
@@ -34,18 +34,18 @@
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="40dp"
+            android:layout_marginRight="50dp"
             android:scaleType="centerCrop"
             android:src="@drawable/cal_today" />
 
         <ImageView
             android:id="@+id/iv_next"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_margin="5dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             android:src="@drawable/cal_next" />
     </RelativeLayout>
 

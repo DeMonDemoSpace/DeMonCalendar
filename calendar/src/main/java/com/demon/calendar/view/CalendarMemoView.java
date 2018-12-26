@@ -42,7 +42,7 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
     private MonthPager monthPager;
     private boolean isLunar, isShowToday;
     private int showDay, theme;
-    private CalendarViewAdapter calendarAdapter;
+    public CalendarViewAdapter calendarAdapter;
     private OnSelectDateListener onSelectDateListener;
     private ArrayList<CalendarItem> currentCalendars = new ArrayList<>();
     private CalendarAttr.WeekArrayType weekArrayType = CalendarAttr.WeekArrayType.Monday;
@@ -168,7 +168,7 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
                 currentCalendar = currentCalendars.get(position % currentCalendars.size());
                 if (position == MonthPager.CURRENT_DAY_INDEX) {
                     currentCalendar.selectDate(currentCalendarDate);
-                }else {
+                } else {
                     tvDate.setText(currentCalendar.getSeedDate().toString());
                 }
             }
@@ -213,6 +213,11 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
      */
     public void setMarkData(HashMap<String, String> markData) {
         calendarAdapter.setMarkData(markData);
+    }
+
+    public void setMarkDataAndRefresh(HashMap<String, String> markData) {
+        calendarAdapter.setMarkData(markData);
+        calendarAdapter.notifyDataChanged();
     }
 
     public void setOnDateListener(OnDateListener onDateListener) {

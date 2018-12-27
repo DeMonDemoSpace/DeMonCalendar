@@ -15,7 +15,7 @@ allprojects {
 
 ```
 dependencies {
-	        implementation 'com.github.DeMonLiu623:DeMonCalendar:v1.2'
+	        implementation 'com.github.DeMonLiu623:DeMonCalendar:v1.4'
 	}
 ```
 
@@ -56,6 +56,8 @@ calendarView = findViewById(R.id.cv);
                 Log.i(TAG, "onDateChange: " + date.toString());
             }
         });
+        
+        //calendarView.refreshMarkData(markData); 用于标记数据的更改和刷新
 ```
 #### 效果
 <img src="https://raw.githubusercontent.com/DeMonLiu623/DeMonCalendar/master/img/device-2018-10-29-163959.png" 
@@ -102,6 +104,8 @@ alt="" height="500" width="300">
                 calendarView.adapter.notifyDataSetChanged();
             }
         });
+        
+        //calendarView.refreshMarkData(markData); 用于标记数据的更改和刷新
 ```
 
 #### 效果
@@ -118,6 +122,8 @@ alt="" height="500" width="300">
 1. v1.0初始版本。
 2. v1.1修复一些bug。
 3. v1.2修复周月滑动的默认日期的问题，现在日期改变只有onDateChange(CalendarDate date)回调方法。
+4. v1.3使用public日期适配器calendarView.calendarAdapter用于刷新日历。
+5. v1.4新增calendarView.refreshMarkData(markData)用于标记数据的更改和刷新
 
 ### BUG or 问题
 请E-mail：757454343@qq.com 联系我。

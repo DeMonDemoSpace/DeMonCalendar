@@ -15,7 +15,7 @@ allprojects {
 
 ```
 dependencies {
-	        implementation 'com.github.DeMonLiu623:DeMonCalendar:v1.5'
+	        implementation 'com.github.DeMonLiu623:DeMonCalendar:v1.6'
 	}
 ```
 

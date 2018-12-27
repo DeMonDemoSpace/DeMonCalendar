@@ -50,6 +50,7 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
     public RecyclerView.Adapter adapter;
     private CalendarDate currentCalendarDate;
     private CalendarItem currentCalendar;
+    private int currentPos = MonthPager.CURRENT_DAY_INDEX;
 
     public CalendarMemoView(Context context) {
         this(context, null);
@@ -153,7 +154,7 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
      */
     private void initMonthPager() {
         monthPager.setAdapter(calendarAdapter);
-        monthPager.setCurrentItem(MonthPager.CURRENT_DAY_INDEX);
+        monthPager.setCurrentItem(currentPos);
         currentCalendars = calendarAdapter.getPagers();
         monthPager.setPageTransformer(false, new ViewPager.PageTransformer() {
             @Override
@@ -175,6 +176,7 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
 
             @Override
             public void onPageSelected(int position) {
+                currentPos = position;
             }
 
             @Override
@@ -217,12 +219,7 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
 
     public void refreshMarkData(HashMap<String, String> markData) {
         calendarAdapter.setMarkData(markData);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                calendarAdapter.notifyDataChanged();
-            }
-        }, 200);
+        calendarAdapter.invalidateCurrentCalendar();
     }
 
     public void setOnDateListener(OnDateListener onDateListener) {

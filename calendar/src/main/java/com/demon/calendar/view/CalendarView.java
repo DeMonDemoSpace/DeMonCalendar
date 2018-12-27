@@ -44,6 +44,7 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
     private CalendarDate currentCalendarDate;
     private CalendarAttr.WeekArrayType weekArrayType = CalendarAttr.WeekArrayType.Monday;
     private CalendarItem currentCalendar;
+    private int currentPos = MonthPager.CURRENT_DAY_INDEX;
 
     public CalendarView(Context context) {
         this(context, null);
@@ -137,7 +138,7 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
      */
     private void initMonthPager() {
         monthPager.setAdapter(calendarAdapter);
-        monthPager.setCurrentItem(MonthPager.CURRENT_DAY_INDEX);
+        monthPager.setCurrentItem(currentPos);
         monthPager.setPageTransformer(false, new ViewPager.PageTransformer() {
             @Override
             public void transformPage(View page, float position) {
@@ -159,6 +160,7 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
 
             @Override
             public void onPageSelected(int position) {
+                currentPos = position;
             }
 
             @Override
@@ -198,12 +200,7 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
 
     public void refreshMarkData(HashMap<String, String> markData) {
         calendarAdapter.setMarkData(markData);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                calendarAdapter.notifyDataChanged();
-            }
-        }, 200);
+        calendarAdapter.invalidateCurrentCalendar();
     }
 
     public void setOnDateListener(OnDateListener onDateListener) {

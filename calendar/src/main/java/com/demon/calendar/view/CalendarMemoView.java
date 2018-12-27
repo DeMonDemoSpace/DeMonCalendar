@@ -219,7 +219,12 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
 
     public void refreshMarkData(HashMap<String, String> markData) {
         calendarAdapter.setMarkData(markData);
-        calendarAdapter.invalidateCurrentCalendar();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                calendarAdapter.invalidateCurrentCalendar();
+            }
+        },200);
     }
 
     public void setOnDateListener(OnDateListener onDateListener) {

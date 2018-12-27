@@ -15,7 +15,7 @@ allprojects {
 
 ```
 dependencies {
-	        implementation 'com.github.DeMonLiu623:DeMonCalendar:v1.4'
+	        implementation 'com.github.DeMonLiu623:DeMonCalendar:v1.5'
 	}
 ```
 
@@ -124,6 +124,7 @@ alt="" height="500" width="300">
 3. v1.2修复周月滑动的默认日期的问题，现在日期改变只有onDateChange(CalendarDate date)回调方法。
 4. v1.3使用public日期适配器calendarView.calendarAdapter用于刷新日历。
 5. v1.4新增calendarView.refreshMarkData(markData)用于标记数据的更改和刷新
+6. v1.5修复标记数据数据刷新的bug
 
 ### BUG or 问题
 请E-mail：757454343@qq.com 联系我。

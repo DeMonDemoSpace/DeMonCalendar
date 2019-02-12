@@ -167,9 +167,7 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 currentCalendar = currentCalendars.get(position % currentCalendars.size());
-                if (position == MonthPager.CURRENT_DAY_INDEX) {
-                    currentCalendar.selectDate(currentCalendarDate);
-                } else {
+                if (position != MonthPager.CURRENT_DAY_INDEX) {
                     tvDate.setText(currentCalendar.getSeedDate().toString());
                 }
             }
@@ -181,7 +179,7 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
 
             @Override
             public void onPageScrollStateChanged(int position, int state) {
-                if (state == 0 && currentCalendar != null) {
+                if (state == 0 && currentCalendar != null && currentCalendar.getSeedDate().getDay() == 1) {
                     currentCalendar.selectDefaultDate();
                 }
             }
@@ -224,7 +222,7 @@ public class CalendarMemoView extends FrameLayout implements View.OnClickListene
             public void run() {
                 calendarAdapter.invalidateCurrentCalendar();
             }
-        },200);
+        }, 200);
     }
 
     public void setOnDateListener(OnDateListener onDateListener) {

@@ -30,7 +30,7 @@ import java.util.HashMap;
  * @description
  */
 public class CalendarView extends FrameLayout implements View.OnClickListener {
-
+    private static final String TAG = "CalendarView";
     private ImageView ivLast, ivToday, ivNext;
     private TextView tvDate;
     private View viewMon, viewSun;
@@ -151,9 +151,7 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 currentCalendar = currentCalendars.get(position % currentCalendars.size());
-                if (position == MonthPager.CURRENT_DAY_INDEX) {
-                    currentCalendar.selectDate(currentCalendarDate);
-                } else {
+                if (position != MonthPager.CURRENT_DAY_INDEX) {
                     tvDate.setText(currentCalendar.getSeedDate().toString());
                 }
             }
@@ -165,7 +163,7 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
 
             @Override
             public void onPageScrollStateChanged(int position, int state) {
-                if (state == 0 && currentCalendar != null) {
+                if (state == 0 && currentCalendar != null && position == currentPos && currentCalendar.getSeedDate().getDay() == 1) {
                     currentCalendar.selectDefaultDate();
                 }
             }
@@ -205,7 +203,7 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
             public void run() {
                 calendarAdapter.invalidateCurrentCalendar();
             }
-        },200);
+        }, 200);
     }
 
     public void setOnDateListener(OnDateListener onDateListener) {

@@ -125,6 +125,7 @@ alt="" height="500" width="300">
 4. v1.3使用public日期适配器calendarView.calendarAdapter用于刷新日历。
 5. v1.4新增calendarView.refreshMarkData(markData)用于标记数据的更改和刷新
 6. v1.5修复标记数据数据刷新的bug
+7. v1.7修复选择日期的bug
 
 ### BUG or 问题
 请E-mail：757454343@qq.com 联系我。

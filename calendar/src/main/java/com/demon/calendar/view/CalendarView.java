@@ -163,7 +163,7 @@ public class CalendarView extends FrameLayout implements View.OnClickListener {
 
             @Override
             public void onPageScrollStateChanged(int position, int state) {
-                if (state == 0 && currentCalendar != null && position == currentPos && currentCalendar.getSeedDate().getDay() == 1) {
+                if (state == 0 && currentCalendar != null && currentCalendar.getSeedDate().getDay() == 1) {
                     currentCalendar.selectDefaultDate();
                 }
             }

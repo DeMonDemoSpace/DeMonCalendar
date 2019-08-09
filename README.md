@@ -128,7 +128,7 @@ alt="" height="500" width="300">
 7. v1.7修复选择日期的bug
 
 ### BUG or 问题
-请E-mail：757454343@qq.com 联系我。
+请在issues留言，定期回复。
 
 ### MIT License
 

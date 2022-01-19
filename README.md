@@ -1,23 +1,6 @@
-[![](https://jitpack.io/v/DeMonLiu623/DeMonCalendar.svg)](https://jitpack.io/#DeMonLiu623/DeMonCalendar)
 
 # DeMonCalendar
 **一个基于[SuperCalendar](https://github.com/MagicMashRoom/SuperCalendar)和[CalendarExaple](https://github.com/codbking/CalendarExaple)改造的日历控件，可显示农历日期，仿小米滑动列表周月切换。**
-
-### 引入
-```
-allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
-```
-
-```
-dependencies {
-	        implementation 'com.github.DeMonLiu623:DeMonCalendar:v1.6'
-	}
-```
 
 ### 只使用日历
 
@@ -127,7 +110,7 @@ alt="" height="500" width="300">
 6. v1.5修复标记数据数据刷新的bug
 7. v1.7修复选择日期的bug
 
-### BUG or 问题
+### 更多
 请在issues留言，定期回复。
 
 ### MIT License

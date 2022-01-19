@@ -1,5 +1,4 @@
-
-# DeMonCalendar
+## DeMonCalendar
 **一个基于[SuperCalendar](https://github.com/MagicMashRoom/SuperCalendar)和[CalendarExaple](https://github.com/codbking/CalendarExaple)改造的日历控件，可显示农历日期，仿小米滑动列表周月切换。**
 
 ### 只使用日历
